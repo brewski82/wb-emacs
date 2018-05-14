@@ -162,9 +162,31 @@
                                   (substring word 1))))
     (kill-new lower-case-word)))
 
+(defun column-name-to-label ()
+  (interactive)
+  (let* ((word (current-word))
+         (word-list (split-string word "_"))
+         (capitalized-word-list (mapcar (lambda (x)
+                                          (concat (capitalize-first-letter x)
+                                                  " "))
+                                        word-list))
+         (label (apply #'concat capitalized-word-list)))
+    (kill-new (substring label 0 (- (length label) 1)))))
+
+(defun field-name-to-sql-column ()
+  (interactive)
+  (save-excursion
+    (replace-regexp " " "_" nil (line-beginning-position) (line-end-position))
+    (replace-regexp "-" "_" nil (line-beginning-position) (line-end-position))
+    (replace-regexp "/" "_" nil (line-beginning-position) (line-end-position))
+    (replace-regexp "\\." "_" nil (line-beginning-position) (line-end-position))
+    (downcase-region (line-beginning-position) (line-end-position))))
+
+
+
 ;;; Initialize workspace
 (defun wb-acceptable-file-to-open (file)
-  (or (string= (file-name-extension file) "java") (string= (file-name-extension file) "sql")))
+  (or (string= (file-name-extension file) "java") (string= (file-name-extension file) "sql") (string= (file-name-extension file) "conf") (string= (file-name-extension file) "sh")))
 
 (defun wb-load-all-files-in-root-directory (directory)
   (mapc (lambda (item)
@@ -175,8 +197,6 @@
                    (find-file-other-window item))
                   (t nil))))
         (directory-files directory 'absolute)))
-
-;; (wb-init-workspace)
 
 (defun uniquify-region-lines (beg end)
   "Remove duplicate adjacent lines in region."
@@ -205,6 +225,7 @@
 
 ;;; Highlight the line your are on.
 (global-hl-line-mode 1)
+(set-face-background 'hl-line "gray28")
 
 ;;; Lisp setup
 (when (boundp 'wb-paredit-location)
@@ -218,3 +239,15 @@
   (add-hook 'lisp-mode-hook
 	    (lambda ()
 	      (define-key lisp-mode-map (kbd "C-;") 'slime-complete-symbol))))
+
+;;; Tabs and indentation.
+(setq-default indent-tabs-mode nil)
+(setq tab-stop-list (number-sequence 4 120 4))
+
+;;; For SQL files I like to set tab spaces to 2
+(defun local-sql-mode-hook-fun ()
+  (setq tab-stop-list (number-sequence 2 120 2))
+  (setq tab-width 2)
+  (setq indent-tabs-mode nil))
+
+(add-hook 'sql-mode-hook 'local-sql-mode-hook-fun)
