@@ -268,3 +268,6 @@
     (when filename
       (kill-new filename)
       (message "Copied buffer file name '%s' to the clipboard." filename))))
+
+;;; Python
+(setq python-shell-interpreter "python3")
