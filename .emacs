@@ -271,3 +271,9 @@
 
 ;;; Python
 (setq python-shell-interpreter "python3")
+
+;;; SQLI
+(dolist (hook '(sql-interactive-mode-hook comint-mode))
+  (add-hook hook
+            (lambda ()
+              (local-set-key (kbd "C-c C-l C-l") 'comint-dynamic-list-input-ring))))
