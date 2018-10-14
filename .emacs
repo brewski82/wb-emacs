@@ -269,11 +269,27 @@
       (kill-new filename)
       (message "Copied buffer file name '%s' to the clipboard." filename))))
 
-;;; Python
-(setq python-shell-interpreter "python3")
-
 ;;; SQLI
 (dolist (hook '(sql-interactive-mode-hook comint-mode))
   (add-hook hook
             (lambda ()
               (local-set-key (kbd "C-c C-l C-l") 'comint-dynamic-list-input-ring))))
+
+;;; Python
+(setq python-shell-interpreter "python3")
+(setq python-shell-interpreter "ipython3"
+      python-shell-interpreter-args "--simple-prompt -i")
+
+(defun wb-run-current-python-file ()
+  (interactive)
+  (save-buffer)
+  (let ((filename (buffer-file-name)))
+    (compile (concat "python3 " filename))))
+
+(add-hook 'python-mode-hook
+          (lambda ()
+            (define-key python-mode-map (kbd "<f5>") 'wb-run-current-python-file)))
+
+;;; Shell env variables.
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
