@@ -234,7 +234,6 @@
 
 ;;; Cursor
 (blink-cursor-mode 1)
-(set-cursor-color "gray47")
 (set-cursor-color "yellow")
 (setq-default cursor-type '(bar . 3) blink-cursor-blinks 200)
 
