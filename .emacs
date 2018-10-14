@@ -230,7 +230,13 @@
 
 ;;; Highlight the line your are on.
 (global-hl-line-mode 1)
-(set-face-background 'hl-line "gray28")
+(set-face-background 'hl-line "gray15")
+
+;;; Cursor
+(blink-cursor-mode 1)
+(set-cursor-color "gray47")
+(set-cursor-color "yellow")
+(setq-default cursor-type '(bar . 3) blink-cursor-blinks 200)
 
 ;;; Lisp setup
 (when (boundp 'wb-paredit-location)
