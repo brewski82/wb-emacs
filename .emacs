@@ -298,3 +298,10 @@
 ;;; Shell env variables.
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
+
+;;; From https://www.emacswiki.org/emacs/SmoothScrolling
+;; scroll one line at a time (less "jumpy" than defaults)
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
+(setq mouse-wheel-progressive-speed t) ;; accelerate scrolling
+(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
+(setq scroll-step 1) ;; keyboard scroll one line at a time
