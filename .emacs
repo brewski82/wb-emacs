@@ -78,7 +78,7 @@
     (other-window 1)
     (w3m-browse-url url newwin)))
 
-(setq browse-url-browser-function 'w3m-browse-url-other-window)
+(setq browse-url-browser-function 'browse-url-default-browser)
 
 ;; Term
 (setq ansi-term-color-vector [unspecified “black” “red3” “lime green” “yellow3” “DeepSkyBlue3” “magenta3” “cyan3” “white”])
@@ -191,7 +191,11 @@
       (string= (file-name-extension file) "conf")
       (string= (file-name-extension file) "sh")
       (string= (file-name-extension file) "md")
-      (string= (file-name-extension file) "markdown")))
+      (string= (file-name-extension file) "markdown")
+      (string= (file-name-extension file) "py")
+      (string= (file-name-extension file) "properties")
+      (string= (file-name-extension file) "yml")
+      (string= (file-name-extension file) "yaml")))
 
 (defun wb-load-all-files-in-root-directory (directory)
   (mapc (lambda (item)
