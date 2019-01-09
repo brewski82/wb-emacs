@@ -195,7 +195,11 @@
       (string= (file-name-extension file) "py")
       (string= (file-name-extension file) "properties")
       (string= (file-name-extension file) "yml")
-      (string= (file-name-extension file) "yaml")))
+      (string= (file-name-extension file) "yaml")
+      (string= (file-name-extension file) "js")
+      (string= (file-name-extension file) "html")
+      (string= (file-name-extension file) "css")
+      (string= (file-name-extension file) "scss")))
 
 (defun wb-load-all-files-in-root-directory (directory)
   (mapc (lambda (item)
