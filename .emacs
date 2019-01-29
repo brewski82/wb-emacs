@@ -314,3 +314,25 @@
 
 ;;; Magit status
 (global-set-key (kbd "C-x g") 'magit-status)
+
+;;; Javascript
+
+;;; Default to rjsx mode
+(add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
+
+;;; Function to send current statement or function to nodejs repl.
+(defun wb-nodejs-repl-send-statement ()
+  (interactive)
+  (save-excursion
+    (mark-defun)
+    (nodejs-repl-send-region (region-beginning) (region-end))
+    (deactivate-mark)))
+
+(add-hook 'rjsx-mode-hook
+          (lambda ()
+            (define-key js-mode-map (kbd "C-x C-e") 'nodejs-repl-send-last-expression)
+            (define-key js-mode-map (kbd "C-c C-j") 'nodejs-repl-send-line)
+            (define-key js-mode-map (kbd "C-c C-r") 'nodejs-repl-send-region)
+            (define-key js-mode-map (kbd "C-c C-l") 'nodejs-repl-load-file)
+            (define-key js-mode-map (kbd "C-c C-z") 'nodejs-repl-switch-to-repl)
+            (define-key js-mode-map (kbd "C-c C-c") 'wb-nodejs-repl-send-statement)))
