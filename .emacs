@@ -33,9 +33,7 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; Whitespace
-(add-hook 'find-file-hook
-          (lambda ()
-            (add-hook 'before-save-hook 'delete-trailing-whitespace nil t)))
+(add-hook 'before-save-hook 'delete-trailing-whitespace nil nil)
 
 (defun wb-remove-delete-whitespace-hook ()
   (interactive)
