@@ -335,4 +335,5 @@
             (define-key js-mode-map (kbd "C-c C-r") 'nodejs-repl-send-region)
             (define-key js-mode-map (kbd "C-c C-l") 'nodejs-repl-load-file)
             (define-key js-mode-map (kbd "C-c C-z") 'nodejs-repl-switch-to-repl)
+            (define-key js-mode-map (kbd "C-c C-b") 'nodejs-repl-send-buffer)
             (define-key js-mode-map (kbd "C-c C-c") 'wb-nodejs-repl-send-statement)))
