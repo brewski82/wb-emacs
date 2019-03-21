@@ -79,8 +79,6 @@
 (setq browse-url-browser-function 'browse-url-default-browser)
 
 ;; Term
-(setq ansi-term-color-vector [unspecified “black” “red3” “lime green” “yellow3” “DeepSkyBlue3” “magenta3” “cyan3” “white”])
-
 ;; Set the frame's title. %b is the name of the buffer. %+ indicates
 ;; the state of the buffer: * if modified, % if read only, or -
 ;; otherwise. Two of them to emulate the mode line. %f for the file
