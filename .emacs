@@ -268,6 +268,9 @@
 
 (add-hook 'sql-mode-hook 'local-sql-mode-hook-fun)
 
+(with-eval-after-load "sql"
+  (add-to-list 'sql-postgres-login-params '(port :default 5432)))
+
 ;;; Copy current file name to clipboard.
 ;;; http://emacsredux.com/blog/2013/03/27/copy-filename-to-the-clipboard/
 (defun wb-copy-file-name-to-clipboard ()
