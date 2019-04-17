@@ -5,6 +5,8 @@
 
 (package-initialize)
 
+(require 'lsp-mode)
+
 ;; Theme
 (load-theme 'soft-charcoal t)
 
@@ -269,6 +271,8 @@
   (load (expand-file-name wb-load-slime))
   (require 'slime)
   (slime-setup '(slime-repl slime-fancy slime-asdf slime-xref-browser slime-indentation slime-mrepl))
+  (when (boundp 'wb-hyperspec-root)
+    (setq common-lisp-hyperspec-root wb-hyperspec-root))
   (add-hook 'lisp-mode-hook
 	    (lambda ()
 	      (define-key lisp-mode-map (kbd "C-;") 'slime-complete-symbol))))
@@ -321,6 +325,8 @@
           (lambda ()
             (define-key python-mode-map (kbd "<f5>") 'wb-run-current-python-file)))
 
+(add-hook 'python-mode-hook #'lsp)
+
 ;;; Shell env variables.
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
@@ -356,4 +362,13 @@
             (define-key js-mode-map (kbd "C-c C-l") 'nodejs-repl-load-file)
             (define-key js-mode-map (kbd "C-c C-z") 'nodejs-repl-switch-to-repl)
             (define-key js-mode-map (kbd "C-c C-b") 'nodejs-repl-send-buffer)
-            (define-key js-mode-map (kbd "C-c C-c") 'wb-nodejs-repl-send-statement)))
+            (define-key js-mode-map (kbd "C-c C-c") 'wb-nodejs-repl-send-statement)
+            (electric-pair-local-mode t)))
+
+(add-hook 'rjsx-mode-hook #'lsp)
+
+;;; Company mode map
+(add-hook 'company-mode-hook
+          (lambda ()
+            (define-key company-active-map (kbd "C-n") 'company-select-next)
+            (define-key company-active-map (kbd "C-p") 'company-select-previous)))
