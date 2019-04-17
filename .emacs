@@ -150,6 +150,14 @@
     (shell-command (concat "wn " word " -over"))))
 
 ;;; My functions
+(defun wb-decapitalize-first-letter (&optional arg)
+  "Forces the first letter of the word at point to be lowercase"
+  (interactive)
+  (let* ((word (or arg (current-word)))
+         (lower-case-word (concat (downcase (string (string-to-char word)))
+                                  (substring word 1))))
+    (kill-new lower-case-word)))
+
 (defun wb-decapitalize-first-letter ()
   "Forces the first letter of the word at point to be lowercase"
   (interactive)
@@ -158,18 +166,29 @@
                                   (substring word 1))))
     (kill-new lower-case-word)))
 
-(defun column-name-to-label ()
+(defun wb-capitalize-first-letter (word)
+  (concat (upcase (substring word 0 1)) (substring word 1)))
+
+(defun wb-column-name-to-label ()
   (interactive)
   (let* ((word (current-word))
          (word-list (split-string word "_"))
          (capitalized-word-list (mapcar (lambda (x)
-                                          (concat (capitalize-first-letter x)
+                                          (concat (wb-capitalize-first-letter x)
                                                   " "))
                                         word-list))
          (label (apply #'concat capitalized-word-list)))
     (kill-new (substring label 0 (- (length label) 1)))))
 
-(defun field-name-to-sql-column ()
+(defun wb-column-name-to-field ()
+  (interactive)
+  (let* ((word (current-word))
+         (capitalized-word (capitalize word))
+         (capitalized-field (replace-regexp-in-string "_" "" capitalized-word))
+         (field (wb-decapitalize-first-letter capitalized-field)))
+    (kill-new field)))
+
+(defun wb-field-name-to-sql-column ()
   (interactive)
   (save-excursion
     (replace-regexp " " "_" nil (line-beginning-position) (line-end-position))
