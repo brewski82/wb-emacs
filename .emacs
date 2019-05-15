@@ -192,14 +192,12 @@
 
 (defun wb-field-name-to-sql-column ()
   (interactive)
-  (save-excursion
-    (replace-regexp " " "_" nil (line-beginning-position) (line-end-position))
-    (replace-regexp "-" "_" nil (line-beginning-position) (line-end-position))
-    (replace-regexp "/" "_" nil (line-beginning-position) (line-end-position))
-    (replace-regexp "\\." "_" nil (line-beginning-position) (line-end-position))
-    (downcase-region (line-beginning-position) (line-end-position))))
-
-
+  (setq case-fold-search nil)
+  (let* ((camel-cased-word (current-word))
+         (underscored-word (replace-regexp-in-string "\\([A-Z]\\)" "_\\1" camel-cased-word t))
+         (field (downcase underscored-word)))
+    (kill-new field))
+  (setq case-fold-search t))
 
 ;;; Initialize workspace
 (defun wb-acceptable-file-to-open (file)
