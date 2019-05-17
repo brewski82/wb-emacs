@@ -265,7 +265,7 @@
   (load wb-paredit-location))
 
 (when (boundp 'wb-load-slime)
-  (setq inferior-lisp-program "sbcl --noinform")
+  (setq inferior-lisp-program wb-inferior-lisp-program)
   (load (expand-file-name wb-load-slime))
   (require 'slime)
   (slime-setup '(slime-repl slime-fancy slime-asdf slime-xref-browser slime-indentation slime-mrepl))
@@ -361,6 +361,7 @@
             (define-key js-mode-map (kbd "C-c C-z") 'nodejs-repl-switch-to-repl)
             (define-key js-mode-map (kbd "C-c C-b") 'nodejs-repl-send-buffer)
             (define-key js-mode-map (kbd "C-c C-c") 'wb-nodejs-repl-send-statement)
+            (define-key js-mode-map (kbd "M-.") 'lsp-goto-type-definition)
             (electric-pair-local-mode t)))
 
 (add-hook 'rjsx-mode-hook #'lsp)
