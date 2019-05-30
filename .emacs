@@ -1,10 +1,10 @@
 ;; Package init
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
 
 (package-initialize)
 
+(require 'cl-lib)
 (require 'lsp-mode)
 
 ;; Theme
@@ -218,7 +218,7 @@
 
 (defun wb-load-all-files-in-root-directory (directory)
   (mapc (lambda (item)
-          (when (not (string= "." (subseq (file-name-nondirectory item) 0 1)))
+          (when (not (string= "." (cl-subseq (file-name-nondirectory item) 0 1)))
             (cond ((and (file-directory-p item) (not (file-symlink-p item)) (not (string= "target" (file-name-nondirectory item ))))
                    (wb-load-all-files-in-root-directory item))
                   ((and (not (file-directory-p item)) (wb-acceptable-file-to-open item))
