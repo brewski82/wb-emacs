@@ -265,15 +265,17 @@
   (load wb-paredit-location))
 
 (when (boundp 'wb-load-slime)
+  (add-to-list 'load-path wb-slime-load-path)
+  (require 'slime-autoloads)
   (setq inferior-lisp-program wb-inferior-lisp-program)
-  (load (expand-file-name wb-load-slime))
   (require 'slime)
   (slime-setup '(slime-repl slime-fancy slime-asdf slime-xref-browser slime-indentation slime-mrepl))
   (when (boundp 'wb-hyperspec-root)
     (setq common-lisp-hyperspec-root wb-hyperspec-root))
   (add-hook 'lisp-mode-hook
 	    (lambda ()
-	      (define-key lisp-mode-map (kbd "C-;") 'slime-complete-symbol))))
+	      (define-key lisp-mode-map (kbd "C-;") 'slime-complete-symbol)))
+  (global-set-key "\C-cs" 'slime-selector))
 
 ;;; Tabs and indentation.
 (setq-default indent-tabs-mode nil)
