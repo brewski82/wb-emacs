@@ -275,7 +275,14 @@
   (add-hook 'lisp-mode-hook
 	    (lambda ()
 	      (define-key lisp-mode-map (kbd "C-;") 'slime-complete-symbol)))
-  (global-set-key "\C-cs" 'slime-selector))
+  (global-set-key "\C-cs" 'slime-selector)
+  ;; Remove highlighting of "errors", "check-" and other such forms.
+  (font-lock-remove-keywords
+   'lisp-mode
+   '(("(\\(a\\(?:\\(?:bo\\|sse\\)rt\\)\\|c\\(?:error\\|heck-type\\)\\|error\\|signal\\|warn\\)\\_>"
+      (1 font-lock-warning-face))))
+  (font-lock-remove-keywords
+   'lisp-mode slime-additional-font-lock-keywords))
 
 ;;; Tabs and indentation.
 (setq-default indent-tabs-mode nil)
