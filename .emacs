@@ -1,8 +1,16 @@
 ;; Package init
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+                         ("melpa" . "http://melpa.milkbox.net/packages/")
+                         ("org" . "http://orgmode.org/elpa/")))
 
 (package-initialize)
+
+
+(require 'ox-extra)
+(ox-extras-activate '(ignore-headlines))
+(require 'ox-latex)
+(setq org-latex-inputenc-alist '(("utf8" . "utf8x")))
+
 
 (require 'cl-lib)
 (require 'lsp-mode)
@@ -24,9 +32,10 @@
 
 ;; Backup files
 (setq backup-directory-alist
-      `((".*" . ,temporary-file-directory)))
+      `((".*" . ,(concat user-emacs-directory "backups"))))
+
 (setq auto-save-file-name-transforms
-      `((".*" ,temporary-file-directory t)))
+      `((".*" ,(concat user-emacs-directory "backups") t)))
 
 ;; Column mode
 (setq column-number-mode t)
@@ -54,7 +63,8 @@
 (dolist (hook '(text-mode-hook org-mode-hook))
   (add-hook hook (lambda () (flyspell-mode 1)
                    (auto-fill-mode 1)
-		   (local-set-key (kbd "C-'") 'other-window))))
+		   (local-set-key (kbd "C-'") 'other-window)
+                   (local-set-key (kbd "M-p") 'org-mark-ring-goto))))
 
 ;;; un-fill text
 (defun wb-unfill-paragraph ()
@@ -380,3 +390,8 @@
           (lambda ()
             (define-key company-active-map (kbd "C-n") 'company-select-next)
             (define-key company-active-map (kbd "C-p") 'company-select-previous)))
+
+(require 'org-bullets)
+(add-hook 'org-mode-hook 'org-bullets-mode)
+
+(setq sentence-end-double-space nil)
