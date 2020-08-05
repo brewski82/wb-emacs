@@ -385,6 +385,7 @@
             (electric-pair-local-mode t)))
 
 (add-hook 'rjsx-mode-hook #'lsp)
+(add-hook 'typescript-mode-hook #'lsp)
 
 ;;; Company mode map
 (add-hook 'company-mode-hook
