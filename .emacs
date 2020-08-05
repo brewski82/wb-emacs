@@ -171,14 +171,6 @@
                                   (substring word 1))))
     (kill-new lower-case-word)))
 
-(defun wb-decapitalize-first-letter ()
-  "Forces the first letter of the word at point to be lowercase"
-  (interactive)
-  (let* ((word (current-word))
-         (lower-case-word (concat (downcase (string (string-to-char word)))
-                                  (substring word 1))))
-    (kill-new lower-case-word)))
-
 (defun wb-capitalize-first-letter (word)
   (concat (upcase (substring word 0 1)) (substring word 1)))
 
