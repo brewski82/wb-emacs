@@ -11,6 +11,7 @@
 (require 'ox-latex)
 (setq org-latex-inputenc-alist '(("utf8" . "utf8x")))
 
+(setf (nth 4 org-emphasis-regexp-components) 10)
 
 (require 'cl-lib)
 (require 'lsp-mode)
